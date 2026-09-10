@@ -1,7 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$config['base_url'] = 'http://localhost/co-balance/';
+$scheme = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+$base_path = isset($_SERVER['SCRIPT_NAME']) ? str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])) : '';
+$base_path = ($base_path === '/' || $base_path === '\\') ? '/' : rtrim($base_path, '/').'/';
+
+$config['base_url'] = $scheme.'://'.$host.$base_path;
 $config['index_page'] = 'index.php';
 $config['uri_protocol'] = 'REQUEST_URI';
 $config['url_suffix'] = '';
